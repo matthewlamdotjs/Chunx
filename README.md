@@ -53,6 +53,12 @@ const rootComponent = chunx(/*html*/`
 // attach root element to dom
 attachRootElement('root', rootComponent);
 ```
+Resulting rendered HTML:
+```html
+<div>
+    <h1>Hello World</h1>
+</div>
+```
 
 ## Declaring template variables by within controller
 /index.js
@@ -117,6 +123,7 @@ const rootComponent = chunx(/*html*/`
     ({set, setFn}) => {
         set('myGreeting', 'Hello World');
 
+        // function referenced in template as {{changeGreeting()}}
         setFn('changeGreeting', () => {
             set('myGreeting', 'Goodbye World');
         });
@@ -215,7 +222,7 @@ const rootComponent = chunx(/*html*/`
     /* props= */ {},
     /* controller= */
     ({set, template}) => {
-        // init subcomponent as component variable
+        // init subcomponent as component variable using template() method
         set('paragraph', template(mySubcomponent, /* props (optional) */ { myText: 'What\'s up?' }));
     });
 );
@@ -230,6 +237,13 @@ import { chunx } from '<path_to_chunx.js>';
 const mySubcomponent = chunx(/*html*/`<p>{{myText}}</p>`);
 
 export default mySubcomponent;
+```
+Resulting rendered HTML:
+```html
+<div>
+    <h1>Hello World</h1>
+    <p>What's up?</p>
+</div>
 ```
 
 ## Adding subcomponents as computed variables (tracked children)
@@ -358,6 +372,82 @@ const mySubcomponent = chunx(/*html*/`<li>Item #{{number}}</li>`);
 export default mySubcomponent;
 ```
 
+# Controller docs
+Chunx component controllers contain all of the component logic.
+The controller is a function that gets passed an object containing chunx component methods.
+
+```js
+const component = chunx(
+    /*html*/
+    `<div></div>`,
+    /* props= */ {},
+    /* controller= */
+    ({get, set, setFn, track, computedVar, template, repeat}) => {
+        // add component logic here
+    }
+);
+
+```
+The available methods to inject are `get, set, setFn, track, computedVar, template, repeat`
+```js
+/**
+ * Getter for tracked variables
+ * @param {string} variableName 
+ * @returns variable
+ */
+get(variableName)
+```
+```js
+/**
+ * Add or update a trackable variable to element
+ * @param {string} name 
+ * @param {any} value 
+ */
+set(name, value)
+```
+```js
+/**
+ * Add function to element that can be called by name from HTML template
+ * @param {string} name 
+ * @param {function} value 
+ */
+setFn(fnName, fnValue)
+```
+```js
+/**
+ * Track a variable and provide a callback function onchange
+ * @param {string} variableName 
+ * @param {function} callbackFn 
+ */
+track(variableName, callbackFn)
+```
+```js
+/**
+ * Declare a computed variable that re-evaluates when tracked variables are updated
+ * @param {string} name 
+ * @param {array<string>} tracked 
+ * @param {function} computeFn 
+ */
+computedVar(name, tracked = [], computeFn = () => null)
+```
+```js
+/**
+ * Initializes an instance of a chunx template and attaches to parent
+ * @param {chunx template} component 
+ * @param {object} data 
+ * @returns htmlString
+ */
+template(component, data = {})
+```
+```js
+/**
+ * Repeat a chunx template applying properties to each from dataArray and attach to parent
+ * @param {chunx template} component 
+ * @param {array<object>} data 
+ * @returns htmlString
+ */
+repeat(component, dataArray = [])
+```
 # Tips
 
 For html string syntax highlighting in VS Code use plugin `tobermory.es6-string-html`
