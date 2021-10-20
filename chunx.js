@@ -1,3 +1,10 @@
+/**
+ * Chunx Template Constructor
+ * @param {DOMstring} htmlString 
+ * @param {object} props 
+ * @param {function} controller 
+ * @returns chunx template
+ */
 const chunx = (htmlString, props = {}, controller = () => {}) => {
     if(!htmlString || typeof htmlString != 'string'){
         throw Error(`chunx require argument 'htmlString' of type string but got ${typeof htmlString}.`);
