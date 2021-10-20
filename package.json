@@ -1,0 +1,24 @@
+{
+  "name": "chunx",
+  "version": "1.0.0",
+  "description": "Front-End Web Component Framework",
+  "main": "chunx.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewlamdotjs/Chunx.git"
+  },
+  "keywords": [
+    "web",
+    "component",
+    "framework"
+  ],
+  "author": "Matthew Lam",
+  "license": "CC0 1.0 Universal",
+  "bugs": {
+    "url": "https://github.com/matthewlamdotjs/Chunx/issues"
+  },
+  "homepage": "https://github.com/matthewlamdotjs/Chunx#readme"
+}
