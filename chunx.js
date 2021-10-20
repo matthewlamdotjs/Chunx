@@ -1,4 +1,4 @@
-function chunx(htmlString, props = {}, controller = () => {}) {
+const chunx = (htmlString, props = {}, controller = () => {}) => {
     if(!htmlString || typeof htmlString != 'string'){
         throw Error(`chunx require argument 'htmlString' of type string but got ${typeof htmlString}.`);
     }
@@ -176,7 +176,7 @@ function chunx(htmlString, props = {}, controller = () => {}) {
  * @param {string} id 
  * @param {chunx element} rootComponent 
  */
-function attachRootElement(id, rootComponent){
+const attachRootElement = (id, rootComponent) => {
     if(typeof id !== 'string'){
         throw Error(`attachRootElement requires argument 'id' of type string but got ${typeof id}.`);
     }
@@ -187,7 +187,7 @@ function attachRootElement(id, rootComponent){
     if(!root){
         throw Error(`attachRootElement: Failed to attach root. No DOM elements found with id: ${id}.`);
     }
-    root.appendChild(rootComponent)
+    root.appendChild(rootComponent);
 }
 
 // probability(unique) is good enough for this application
