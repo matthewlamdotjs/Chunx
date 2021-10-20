@@ -408,8 +408,8 @@ set(name, value)
 ```js
 /**
  * Add function to element that can be called by name from HTML template
- * @param {string} name 
- * @param {function} value 
+ * @param {string} fnName 
+ * @param {function} fnValue 
  */
 setFn(fnName, fnValue)
 ```
@@ -443,7 +443,7 @@ template(component, data = {})
 /**
  * Repeat a chunx template applying properties to each from dataArray and attach to parent
  * @param {chunx template} component 
- * @param {array<object>} data 
+ * @param {array<object>} dataArray 
  * @returns htmlString
  */
 repeat(component, dataArray = [])

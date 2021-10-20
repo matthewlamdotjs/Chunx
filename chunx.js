@@ -56,8 +56,8 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
     };
     /**
      * Add function to element that can be called by name from HTML template
-     * @param {string} name 
-     * @param {function} value 
+     * @param {string} fnName 
+     * @param {function} fnValue 
      */
     element.setFn = (fnName, fnValue) => {
         if(typeof fnName !== 'string'){
@@ -133,10 +133,10 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
      */
     element.template = (component, data = {}) => {
         if(!(component() instanceof HTMLElement)){
-            throw Error(`repeat: expected function argument 'component' that returns type HTMLElement but got ${typeof component()}.`);
+            throw Error(`template: expected function argument 'component' that returns type HTMLElement but got ${typeof component()}.`);
         }
         if(typeof data !== 'object'){
-            throw Error(`repeat: argument 'dataArray' expected array of type object but got ${typeof data}.`);
+            throw Error(`template: argument 'data' expected array of type object but got ${typeof data}.`);
         }
         const rendered = component().withVars(data);
         element._includeChild(rendered);
@@ -145,7 +145,7 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
     /**
      * Repeat a chunx template applying properties to each from dataArray and attach to parent
      * @param {chunx template} component 
-     * @param {array<object>} data 
+     * @param {array<object>} dataArray 
      * @returns htmlString
      */
     element.repeat = (component, dataArray = []) => {
