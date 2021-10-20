@@ -10,7 +10,7 @@ const rootComponent = chunx(/*html*/`
     /* props= */
     {myTitle: 'Hello World'}, // passing props through constructor
     /* controller= */
-    ({get, set, setFn, track, computedVar}) => {
+    ({get, set, setFn, track, computedVar, template, repeat}) => {
         set('paragraph', template(mySubComponent, {listName: 'my list'})); // adding props after chunx created
     });
 

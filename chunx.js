@@ -6,12 +6,24 @@
  * @returns chunx template
  */
 const chunx = (htmlString, props = {}, controller = () => {}) => {
+    return () => chunxInstance(htmlString, props, controller);
+}
+/**
+ * Chunx Instance Constructor
+ * @param {DOMstring} htmlString 
+ * @param {object} props
+ * @param {function} controller 
+ * @returns chunx instance
+ */
+const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
     if(!htmlString || typeof htmlString != 'string'){
         throw Error(`chunx require argument 'htmlString' of type string but got ${typeof htmlString}.`);
     }
     if(!window.chunx) window.chunx = {};
     const element = document.createElement('div');
-    element.ref = `elem${_uniqueId()}`;
+    // https://jsmates.com/blog/generating-simple-unique-identifier-using-javascript
+    element.ref = `elem${Date.now().toString(36)+Math.random().toString(36).substr(2)}`;
+    console.log(element.ref);
     element.innerHTML = htmlString;
     element._variables = props;
     element._functions = {};
@@ -175,7 +187,7 @@ const chunx = (htmlString, props = {}, controller = () => {}) => {
         template: element.template,
         repeat: element.repeat,
     });
-    return () => element;
+    return element;
 }
 
 /**
@@ -196,13 +208,5 @@ const attachRootElement = (id, rootComponent) => {
     }
     root.appendChild(rootComponent);
 }
-
-// probability(unique) is good enough for this application
-// https://jsmates.com/blog/generating-simple-unique-identifier-using-javascript
-const _uniqueId = () => {
-    const dateString = Date.now().toString(36);
-    const randomness = Math.random().toString(36).substr(2);
-    return dateString + randomness;
-};
 
 export { chunx, attachRootElement };

@@ -8,6 +8,8 @@ const mySubComponent = chunx(/*html*/`
         It's been {{myExpression}}!
     </p>
     <button onclick="{{switch()}}">Switch</button>
+    <br>
+    <h2>{{listName}}</h2>
     <ul> 
         {{listItems}}
     </ul>
