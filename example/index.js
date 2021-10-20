@@ -15,4 +15,4 @@ const rootComponent = chunx(/*html*/`
     });
 
 // attach root element to dom
-attachRootElement('root', rootComponent());
+attachRootElement('root', rootComponent);

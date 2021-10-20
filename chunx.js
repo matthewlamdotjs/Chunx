@@ -193,20 +193,21 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
 /**
  * Attaches root element to DOM
  * @param {string} id 
- * @param {chunx element} rootComponent 
+ * @param {chunx template} rootComponent 
  */
 const attachRootElement = (id, rootComponent) => {
+    const instance = rootComponent();
     if(typeof id !== 'string'){
         throw Error(`attachRootElement requires argument 'id' of type string but got ${typeof id}.`);
     }
-    if(!(rootComponent instanceof HTMLElement)){
-        throw Error(`attachRootElement requires argument 'rootComponent' of type HTMLElement but got ${typeof rootComponent}.`);
+    if(!(instance instanceof HTMLElement)){
+        throw Error(`attachRootElement requires argument 'rootComponent' of type HTMLElement but got ${typeof instance}.`);
     }
     const root = document.getElementById(id);
     if(!root){
         throw Error(`attachRootElement: Failed to attach root. No DOM elements found with id: ${id}.`);
     }
-    root.appendChild(rootComponent);
+    root.appendChild(instance);
 }
 
 export { chunx, attachRootElement };
