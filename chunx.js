@@ -81,7 +81,7 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
             throw Error(`track failed: argument 'callbackFn' expected function but got ${typeof callbackFn}.`);
         }
         if(!element._variables[variableName]){
-            throw Error(`track failed: Variable with name '${variableName}' does not exist.`);
+            throw Error(`track failed: variable with name '${variableName}' does not exist.`);
         }
         if(!element._updateEvents[variableName]) element._updateEvents[variableName] = [];
         element._updateEvents[variableName].push(callbackFn);
@@ -130,7 +130,7 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
      */
     element.template = (component, data = {}) => {
         if(!(component() instanceof HTMLElement)){
-            throw Error(`repeat: argument 'component' expected type HTMLElement but got ${typeof component()}.`);
+            throw Error(`repeat: expected function argument 'component' that returns type HTMLElement but got ${typeof component()}.`);
         }
         if(typeof data !== 'object'){
             throw Error(`repeat: argument 'dataArray' expected array of type object but got ${typeof data}.`);
@@ -147,7 +147,7 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
      */
     element.repeat = (component, dataArray = []) => {
         if(!(component() instanceof HTMLElement)){
-            throw Error(`repeat: argument 'component' expected type HTMLElement but got ${typeof component()}.`);
+            throw Error(`repeat: expected function argument 'component' that returns type HTMLElement but got ${typeof component()}.`);
         }
         return dataArray.map((data) => {
             if(typeof data !== 'object'){
@@ -201,7 +201,7 @@ const attachRootElement = (id, rootComponent) => {
         throw Error(`attachRootElement requires argument 'id' of type string but got ${typeof id}.`);
     }
     if(!(instance instanceof HTMLElement)){
-        throw Error(`attachRootElement requires argument 'rootComponent' of type HTMLElement but got ${typeof instance}.`);
+        throw Error(`attachRootElement requires function argument 'rootComponent' that returns type HTMLElement but got ${typeof instance}.`);
     }
     const root = document.getElementById(id);
     if(!root){
