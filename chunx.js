@@ -29,6 +29,10 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
     element._updateEvents = {};
     element._subComponents = {};
     element._propagateUpdate = () => {};
+    // init inline props callback array in _updateEvents
+    Object.keys(element._variables).forEach(name => {  
+        element._updateEvents[name] = [];
+    });
     /**
      * Add or update a trackable variable to element
      * @param {string} name 
