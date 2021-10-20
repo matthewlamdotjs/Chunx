@@ -8,7 +8,7 @@ No more compiling back down to JS, Just include `chunx.js`
 Place `chunx.js` somewhere in your project directory
 
 ## Creating root component and attaching to DOM
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 
@@ -21,7 +21,7 @@ const rootComponent = chunx(/*html*/`
 // attach root element to dom
 attachRootElement('root', rootComponent);
 ```
-index.html
+./index.html
 ```html
 <!DOCTYPE html>
 <html>
@@ -35,7 +35,7 @@ index.html
 ```
 
 ## Declaring template variables by passing props
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 
@@ -53,7 +53,7 @@ const rootComponent = chunx(/*html*/`
 // attach root element to dom
 attachRootElement('root', rootComponent);
 ```
-Resulting rendered HTML:
+Resulting computed HTML:
 ```html
 <div>
     <h1>Hello World</h1>
@@ -61,7 +61,7 @@ Resulting rendered HTML:
 ```
 
 ## Declaring template variables by within controller
-/index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 
@@ -82,7 +82,7 @@ attachRootElement('root', rootComponent);
 ```
 
 ## Getting template variables
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 
@@ -105,7 +105,7 @@ attachRootElement('root', rootComponent);
 ```
 
 ## Declaring functions that can be referenced in template
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 
@@ -135,7 +135,7 @@ attachRootElement('root', rootComponent);
 ```
 
 ## Tracking variables and adding callbacks
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 
@@ -169,7 +169,7 @@ attachRootElement('root', rootComponent);
 ```
 
 ## Computed variables
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 
@@ -208,7 +208,7 @@ attachRootElement('root', rootComponent);
 ```
 
 ## Adding subcomponents (children)
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 import mySubcomponent from './components/mySubcomponent.js'
@@ -238,7 +238,7 @@ const mySubcomponent = chunx(/*html*/`<p>{{myText}}</p>`);
 
 export default mySubcomponent;
 ```
-Resulting rendered HTML:
+Resulting computed HTML:
 ```html
 <div>
     <h1>Hello World</h1>
@@ -247,7 +247,7 @@ Resulting rendered HTML:
 ```
 
 ## Adding subcomponents as computed variables (tracked children)
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 import mySubcomponent from './components/mySubcomponent.js'
@@ -286,7 +286,7 @@ export default mySubcomponent;
 ```
 
 ## Adding repeated subcomponents using props from data array
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 import mySubcomponent from './components/mySubcomponent.js'
@@ -319,7 +319,7 @@ const mySubcomponent = chunx(/*html*/`<li>Item #{{number}}</li>`);
 export default mySubcomponent;
 ```
 
-Resulting rendered HTML:
+Resulting computed HTML:
 ```html
 <ul>
     <li>Item #1</li>
@@ -331,7 +331,7 @@ Resulting rendered HTML:
 ```
 
 ## Adding repeated subcomponents as computed variable
-index.js
+./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
 import mySubcomponent from './components/mySubcomponent.js'
