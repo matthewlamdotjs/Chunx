@@ -23,7 +23,6 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
     const element = document.createElement('div');
     // https://jsmates.com/blog/generating-simple-unique-identifier-using-javascript
     element.ref = `elem${Date.now().toString(36)+Math.random().toString(36).substr(2)}`;
-    console.log(element.ref);
     element.innerHTML = htmlString;
     element._variables = props;
     element._functions = {};
