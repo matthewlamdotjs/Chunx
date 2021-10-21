@@ -6,7 +6,7 @@ Simple "no-frills" Front-End Web Component Framework featuring:
 
 "No building, No compiling, Just `chunx.js`"
 
-# Table of Contents
+## Table of Contents
 1. [Docs](#docs)
     1. [Getting Started](#gettingstarted)
     2. [Chunx Constructor](#chunxconstructor)
@@ -391,7 +391,7 @@ const rootComponent = chunx(
         // Computed variables are used in template as normal variables
         // but they are re-calculated when tracked variables change.
         // example: 'result' will be re-calculated whenever 'myGreeting' changes
-        computedVar('result', // variable name
+        computedVar('result',       // variable name
                     ['myGreeting'], // array of variables to track
                     /* function used to compute value */
                     () => get('myGreeting') === 'Hello World' ? 'Nice!' : 'Awww...';
