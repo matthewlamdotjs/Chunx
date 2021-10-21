@@ -300,10 +300,10 @@ const rootComponent = chunx(
 
         // Declare a function that can be referenced in html attributes:
         //
-        // declaring this function with setFn(fnName, fnValue) allows
+        // Declaring this function with setFn(fnName, fnValue) allows
         // the function to be referenced in template as {{changeGreeting()}}
         // within html attributes that accept javascript functions as values
-        // such as `onclick`
+        // such as `onclick`.
         setFn('changeGreeting', () => {
             set('myGreeting', 'Goodbye World');
         });
@@ -348,7 +348,7 @@ const rootComponent = chunx(
         // Track changes to the variable myGreeting:
         //
         // `track(variableName, callback)` listens for calls to set() and
-        // executes callback when variable <variableName> changed using set()
+        // executes callback when variable <variableName> changed using set().
         track('myGreeting', () => {
             alert('My title changed!');
         });
@@ -389,7 +389,7 @@ const rootComponent = chunx(
         });
 
         // Computed variables are used in template as normal variables
-        // but they are re-calculated when tracked variables change
+        // but they are re-calculated when tracked variables change.
         // example: 'result' will be re-calculated whenever 'myGreeting' changes
         computedVar('result', // variable name
                     ['myGreeting'], // array of variables to track
@@ -426,7 +426,7 @@ const rootComponent = chunx(
         //
         // `template(component, props)` creates an instance of the component with props,
         // links it to the current component as its parent, and returns an element reference
-        // that can be stored in a variable used in the template to render the subcomponent
+        // that can be stored in a variable used in the template to render the subcomponent.
         set('paragraph', template(mySubcomponent, /* props (optional) */ { myText: 'What\'s up?' }));
     });
 );
@@ -484,8 +484,8 @@ const rootComponent = chunx(
 
         // Initialize subcomponent as a computed variable:
         //
-        // Chunx will automatically update computedVar 'paragraph' when
-        // 'myGreeting' re-rendering the subcomponent with new data
+        // Chunx will automatically re-calculate computedVar 'paragraph'
+        // using the function provided when variable 'myGreeting' is changed.
         computedVar('paragraph', ['myGreeting'],
                 () => template(mySubcomponent, { myText: get('myGreeting') }));
     });
@@ -530,7 +530,7 @@ const rootComponent = chunx(
         //
         // `repeat()` will repeat mySubcomponent get('dataArray').length times
         // with each copy using the data at its respective index in the array
-        // as its props
+        // as its props.
         set('listItems', repeat(mySubcomponent, get('dataArray')));
     });
 );
@@ -577,10 +577,10 @@ const rootComponent = chunx(
 
     /* controller */
     ({get, set, setFn, computedVar, repeat}) => {
-        // declare array of objects where objects contain props to be passed
+        // Declare array of objects where objects contain props to be passed
         set('dataArray', [1,2,3,4,5].map(num => {number: num}));
 
-        // declare function to add new item to data array with next number in sequence
+        // Declare function to add new item to data array with next number in sequence
         setFn('addItem', () => {
             const array = get('dataArray');
             set('dataArray', [...array, { number: array[array.length-1].number+1 }]);
