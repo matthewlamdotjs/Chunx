@@ -6,12 +6,37 @@ Simple "no-frills" Front-End Web Component Framework featuring:
 
 "No building, No compiling, Just `chunx.js`"
 
+# Table of Contents
+1. [Docs](#docs)
+    1. [Getting Started](#gettingstarted)
+    2. [Chunx Constructor](#chunxconstructor)
+    3. [Chunx Props](#chunxprops)
+    4. [Chunx Controller](#chunxcontroller)
+2. [Examples](#examples)
+    1. [Creating root component and attaching to DOM](#example1)
+    2. [Declaring template variables by passing props](#example2)
+    3. [Declaring template variables with controller](#example3)
+    4. [Getting template variables](#example4)
+    5. [Declaring functions that can be referenced in template](#example5)
+    6. [Tracking variables and adding callbacks](#example6)
+    7. [Computed variables](#example7)
+    8. [Adding subcomponents (children)](#example8)
+    9. [Adding subcomponents as computed variables (tracked children)](#example9)
+    10. [Adding repeated subcomponents using props from data array](#example10)
+    11. [Adding repeated subcomponents as computed variable](#example11)
+3. [Tips](#tips)
+
+<div id="docs"></div>
 
 # Docs
+
+<div id="gettingstarted"></div>
 
 ## Getting Started
 
 Place `chunx.js` somewhere in your project directory
+
+<div id="chunxconstructor"></div>
 
 ## Chunx Constructor
 This function is used to define all of your re-usable components, or "chunx" and returns a function that when called returns an instance of the chunx.
@@ -25,6 +50,8 @@ This function is used to define all of your re-usable components, or "chunx" and
  */
 chunx(htmlString, props = {}, controller = () => {})
 ```
+
+<div id="chunxprops"></div>
 
 ## Chunx Props
 Props are tracked variables that are declared within the constructor. Each variable name should be a key in the props object with an initial value.
@@ -43,8 +70,10 @@ const component = chunx(
 
 Note: variables can also be declared within the controller using the injected set() function.
 
+<div id="chunxcontroller"></div>
+
 ## Chunx Controller
-The Chunx component controller is a function that contains all of the component's logic. The logic is implemented using chunx component methods that are passed to the function in an object which you can destructure to cherry pick only the methods you need.
+The Chunx component controller is a function that contains all of the component's logic. The logic is implemented using chunx component methods that are passed to the function in an object. This is done so you can destructure the object and cherry pick only the methods you need.
 
 ```js
 const component = chunx(
@@ -131,7 +160,11 @@ repeat(component, dataArray = [])
 
 You can find examples of the controller functions in the section below.
 
-# Examples
+<div id="examples"></div>
+
+# Examples<a name="examples"></a>
+
+<div id="example1"></div>
 
 ## Creating root component and attaching to DOM
 ./index.js
@@ -161,6 +194,8 @@ attachRootElement('root', rootComponent);
 </html>
 ```
 
+<div id="example2"></div>
+
 ## Declaring template variables by passing props
 ./index.js
 ```js
@@ -188,6 +223,8 @@ Resulting computed HTML:
 </div>
 ```
 
+<div id="example3"></div>
+
 ## Declaring template variables with controller
 ./index.js
 ```js
@@ -210,6 +247,8 @@ const rootComponent = chunx(
 // attach root element to dom
 attachRootElement('root', rootComponent);
 ```
+
+<div id="example4"></div>
 
 ## Getting template variables
 ./index.js
@@ -236,6 +275,8 @@ const rootComponent = chunx(
 attachRootElement('root', rootComponent);
 ```
 
+<div id="example5"></div>
+
 ## Declaring functions that can be referenced in template
 ./index.js
 ```js
@@ -257,7 +298,12 @@ const rootComponent = chunx(
     ({set, setFn}) => {
         set('myGreeting', 'Hello World');
 
-        // function referenced in template as {{changeGreeting()}}
+        // Declare a function that can be referenced in html attributes:
+        //
+        // declaring this function with setFn(fnName, fnValue) allows
+        // the function to be referenced in template as {{changeGreeting()}}
+        // within html attributes that accept javascript functions as values
+        // such as `onclick`
         setFn('changeGreeting', () => {
             set('myGreeting', 'Goodbye World');
         });
@@ -267,6 +313,12 @@ const rootComponent = chunx(
 // attach root element to dom
 attachRootElement('root', rootComponent);
 ```
+
+Note: referencing functions declared with setFn() will not actually call the function and display its returned value.
+
+This means if you have a function `setFn('myName', () => { return 'matt' }` and reference it like this `<h1>{{myName()}}<h1/>` it will NOT render `<h1>matt<h1/>` but instead print a global reference to the function. If you want the output of the function to display on screen wherever it is referenced in the template see [computed variables](#example7).
+
+<div id="example6"></div>
 
 ## Tracking variables and adding callbacks
 ./index.js
@@ -293,7 +345,10 @@ const rootComponent = chunx(
             set('myGreeting', 'Goodbye World');
         });
 
-        // executes provided callback every time set('myGreeting', newVal) is called
+        // Track changes to the variable myGreeting:
+        //
+        // `track(variableName, callback)` listens for calls to set() and
+        // executes callback when variable <variableName> changed using set()
         track('myGreeting', () => {
             alert('My title changed!');
         });
@@ -303,6 +358,8 @@ const rootComponent = chunx(
 // attach root element to dom
 attachRootElement('root', rootComponent);
 ```
+
+<div id="example7"></div>
 
 ## Computed variables
 ./index.js
@@ -331,7 +388,7 @@ const rootComponent = chunx(
             set('myGreeting', 'Goodbye World');
         });
 
-        // computed variables are used in template as normal variables
+        // Computed variables are used in template as normal variables
         // but they are re-calculated when tracked variables change
         // example: 'result' will be re-calculated whenever 'myGreeting' changes
         computedVar('result', // variable name
@@ -344,6 +401,8 @@ const rootComponent = chunx(
 // attach root element to dom
 attachRootElement('root', rootComponent);
 ```
+
+<div id="example8"></div>
 
 ## Adding subcomponents (children)
 
@@ -363,7 +422,11 @@ const rootComponent = chunx(
 
     /* controller */
     ({set, template}) => {
-        // init subcomponent as component variable using template() method
+        // Init subcomponent as component variable:
+        //
+        // `template(component, props)` creates an instance of the component with props,
+        // links it to the current component as its parent, and returns an element reference
+        // that can be stored in a variable used in the template to render the subcomponent
         set('paragraph', template(mySubcomponent, /* props (optional) */ { myText: 'What\'s up?' }));
     });
 );
@@ -389,6 +452,8 @@ Resulting computed HTML:
 </div>
 ```
 
+<div id="example9"></div>
+
 ## Adding subcomponents as computed variables (tracked children)
 ./index.js
 ```js
@@ -399,6 +464,11 @@ const rootComponent = chunx(
     /* html */`
     <div>
         <h1>{{myGreeting}}</h1>
+        
+        <button onclick={{changeGreeting()}}>
+            Change Greeting
+        </button>
+
         {{paragraph}}
     </div>`,
 
@@ -412,7 +482,10 @@ const rootComponent = chunx(
             set('myGreeting', 'Goodbye World');
         });
 
-        // init subcomponent as component as tracked variable
+        // Initialize subcomponent as a computed variable:
+        //
+        // Chunx will automatically update computedVar 'paragraph' when
+        // 'myGreeting' re-rendering the subcomponent with new data
         computedVar('paragraph', ['myGreeting'],
                 () => template(mySubcomponent, { myText: get('myGreeting') }));
     });
@@ -430,6 +503,8 @@ const mySubcomponent = chunx(/* html */`<p>My greeting is: {{myText}}.</p>`);
 
 export default mySubcomponent;
 ```
+
+<div id="example10"></div>
 
 ## Adding repeated subcomponents using props from data array
 
@@ -451,7 +526,11 @@ const rootComponent = chunx(
         // declare array of objects where objects contain props to be passed
         set('dataArray', [1,2,3,4,5].map(num => {number: num}));
 
-        // declare variable as repeated subcomponent using dataArray as props
+        // Declare variable as repeated subcomponent using dataArray as props:
+        //
+        // `repeat()` will repeat mySubcomponent get('dataArray').length times
+        // with each copy using the data at its respective index in the array
+        // as its props
         set('listItems', repeat(mySubcomponent, get('dataArray')));
     });
 );
@@ -478,6 +557,8 @@ Resulting computed HTML:
     <li>Item #5</li>
 </ul>
 ```
+
+<div id="example11"></div>
 
 ## Adding repeated subcomponents as computed variable
 ./index.js
@@ -524,7 +605,7 @@ const mySubcomponent = chunx(/* html */`<li>Item #{{number}}</li>`);
 export default mySubcomponent;
 ```
 
-# Tips
+# Tips<div id="tips"/>
 
 For html string syntax highlighting in VS Code use plugin `tobermory.es6-string-html`
 And make sure html strings are preceded by `/* html */` such as 
