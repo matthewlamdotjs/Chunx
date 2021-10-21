@@ -3,7 +3,8 @@ import { chunx } from '../../chunx.js';
 // shorthand "dumb" reusable component
 const listItem = chunx(/*html*/`<li>Item {{number}}</li>`);
 
-const mySubComponent = chunx(/*html*/`
+const mySubComponent = chunx(
+    /* html */`
     <p>
         It's been {{myExpression}}!
     </p>
@@ -13,10 +14,11 @@ const mySubComponent = chunx(/*html*/`
     <ul> 
         {{listItems}}
     </ul>
-    <button onclick="{{addItem()}}">Add Item</button>
-    `,
+    <button onclick="{{addItem()}}">Add Item</button>`,
+
     /* props= */
     {dataArray: [{number: 1}]},
+    
     /* controller= */
     ({get, set, setFn, track, computedVar, template, repeat}) => {
         /**
