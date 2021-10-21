@@ -60,7 +60,7 @@ Resulting computed HTML:
 </div>
 ```
 
-## Declaring template variables by within controller
+## Declaring template variables with controller
 ./index.js
 ```js
 import { chunx, attachRootElement } from '<path_to_chunx.js>';
