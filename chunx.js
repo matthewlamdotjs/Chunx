@@ -6,6 +6,15 @@
  * @returns chunx template
  */
 const chunx = (htmlString, props = {}, controller = () => {}) => {
+    if(!htmlString || typeof htmlString != 'string'){
+        throw Error(`chunx: argument 'htmlString' expected string but got ${typeof htmlString}.`);
+    }
+    if(typeof props !== 'object'){
+        throw Error(`chunx: argument 'props' expected object but got ${typeof props}.`);
+    }
+    if(typeof controller !== 'function'){
+        throw Error(`chunx: argument 'controller' expected function but got ${typeof controller}.`);
+    }
     return () => chunxInstance(htmlString, props, controller);
 }
 /**
@@ -16,9 +25,6 @@ const chunx = (htmlString, props = {}, controller = () => {}) => {
  * @returns chunx instance
  */
 const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
-    if(!htmlString || typeof htmlString != 'string'){
-        throw Error(`chunx require argument 'htmlString' of type string but got ${typeof htmlString}.`);
-    }
     if(!window.chunx) window.chunx = {};
     const element = document.createElement('div');
     // https://jsmates.com/blog/generating-simple-unique-identifier-using-javascript
@@ -136,7 +142,7 @@ const chunxInstance = (htmlString, props = {}, controller = () => {}) => {
             throw Error(`template: expected function argument 'component' that returns type HTMLElement but got ${typeof component()}.`);
         }
         if(typeof data !== 'object'){
-            throw Error(`template: argument 'data' expected array of type object but got ${typeof data}.`);
+            throw Error(`template: argument 'data' expected object but got ${typeof data}.`);
         }
         const rendered = component().withVars(data);
         element._includeChild(rendered);
