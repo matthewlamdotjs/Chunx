@@ -1,10 +1,12 @@
+** Disclaimer: for educational purposes, not performance optimized **
+
 # Chunx
 Simple "no-frills" Front-End Web Component Framework featuring:
 - Reusable template components
 - Automatic re-render on component variable changes
 - Single dependency with no additional build time
 
-"No building, No compiling, Just `chunx.js`"
+I wanted to experiment with creating my own front-end framework, so I did it in "chunx" :)
 
 ## Table of Contents
 1. [Docs](#docs)
